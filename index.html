@@ -48,19 +48,22 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="family/family.js" defer data-lang="en" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="demo.css">
 </head>
 <body>
 <main>
 <div class="hero">
-  <img class="icon" src="icon-512.png" alt="" width="112" height="112">
-  <h1>Umbrette</h1>
-  <p class="tagline">Dim everything but the window you work in.</p>
+  <div class="hero-pill">⚡ Asks for no permission · Nothing leaves your Mac</div>
+  <img class="icon" src="icon-512.png" alt="Umbrette" width="112" height="112">
+  <h1>Focus on one window.<br><span class="gradient-text">Let everything else step back.</span></h1>
+  <p class="tagline">Umbrette lives in the menu bar and puts a soft shade over everything on screen except the window you work in.</p>
   <!-- family:stores -->
   <div class="family-stores">
     <a class="family-store" href="https://apps.apple.com/app/id6816791013?platform=mac"><img src="family/badges/download-on-the-mac-app-store.svg" alt="Download on the Mac App Store" height="46"></a>
   </div>
   <!-- /family:stores -->
-<nav class="links">
+  <p class="platform-banner">Available for Mac</p>
+  <nav class="links">
     <a href="./">Home</a>
     <a href="support.html">Support</a>
     <a href="privacy.html">Privacy policy</a>
@@ -107,11 +110,51 @@
   </nav>
 </div>
 
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Interactive demo: click a window to bring it into focus">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Try it: click any window to focus it</span>
+      <label class="um-slider"><span>Dim depth</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Your editor</strong>
+        <p>The window you work in stays crisp and bright while you type.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Chat</strong>
+        <p>Background chatter, softly dimmed so it stops pulling at your eyes.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Browser</strong>
+        <p>Reference material steps back until you click it.</p>
+      </div>
+  </div>
+  <p class="demo-note">A simulation of the idea. In the app the shade covers your real screen, and the light follows you as you switch apps and windows.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
+
+  
+
 <!-- family:shot --><figure class="shot"><img src="img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
   <h2>What it does</h2>
   <p>Umbrette lives in the menu bar and puts a soft shade over everything on screen except the window you are working in, so it stands out and the rest steps back: for deep work, for tidy screenshots and demos, and for easy evenings. Click the icon to dim; click it again to bring the whole screen back.</p>
-  <ul>
+  <ul class="feature-list">
     <li><strong>Dim or blur,</strong> with a depth you set and a tint: neutral, warm, cool or your own colour.</li>
     <li><strong>The whole app or only the front window</strong> stays bright, and the light follows you as you switch apps and windows, with a smooth fade.</li>
     <li><strong>Rules for your apps:</strong> never dim while a video player is in front, keep a few apps lit together, or let small helpers take the focus without moving the light.</li>
@@ -120,6 +163,49 @@
     <li><strong>Made for the Mac:</strong> a Focus filter, Shortcuts actions, an optional keyboard shortcut and launch at login.</li>
   </ul>
   <p class="note">Requires macOS 14 Sonoma or later.</p>
+</section>
+
+<section class="card comparison-card" id="comparison">
+  <h2>Tidying your screen by hand vs Umbrette</h2>
+  <p class="section-lead">Keep every window open without losing your train of thought.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>By hand</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Focus</strong></td>
+          <td>Minimising and hiding windows one by one</td>
+          <td class="highlight-col"><strong>The window you work in stays bright; the rest steps back</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Switching</strong></td>
+          <td>Rearranging again every time you change task</td>
+          <td class="highlight-col"><strong>The light follows you as you switch apps and windows</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Evenings</strong></td>
+          <td>Bright windows glaring at you late at night</td>
+          <td class="highlight-col"><strong>Dim on a schedule, with a shade that leans warm</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Demos and screenshots</strong></td>
+          <td>Closing everything else first</td>
+          <td class="highlight-col"><strong>One click dims all but the window you show</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permissions</strong></td>
+          <td>A tool that reads your screen needs Screen Recording</td>
+          <td class="highlight-col"><strong>Umbrette asks for none: not Accessibility, not Screen Recording</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section class="card">
