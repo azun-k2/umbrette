@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="it" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Demo interattiva: fai clic su una finestra per metterla a fuoco">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Prova: fai clic su una finestra per evidenziarla</span>
+      <label class="um-slider"><span>Intensità oscuramento</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Il tuo editor</strong>
+        <p>La finestra in cui lavori rimane nitida e luminosa mentre scrivi.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Messaggi</strong>
+        <p>Le chat in sottofondo vengono attenuate dolcemente per non distrarre.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Browser</strong>
+        <p>I documenti di riferimento restano in secondo piano finché non fai clic.</p>
+      </div>
+  </div>
+  <p class="demo-note">Una simulazione visiva. Nell'app reale l'ombra copre lo schermo e la luce segue i tuoi spostamenti.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Richiede macOS 14 Sonoma o versioni successive.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Organizzare lo schermo a mano rispetto a Umbrette</h2>
+  <p class="section-lead">Tieni aperte tutte le finestre senza perdere il filo dei tuoi pensieri.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspetto</th>
+          <th>A mano</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Concentrazione</strong></td>
+          <td>Ridurre a icona e nascondere le finestre una a una</td>
+          <td class="highlight-col"><strong>La finestra attiva resta luminosa; il resto sfuma sullo sfondo</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Cambi di contesto</strong></td>
+          <td>Riorganizzare tutto ogni volta che cambi attività</td>
+          <td class="highlight-col"><strong>La luce ti segue fluidamente quando passi da un'app all'altra</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Di sera</strong></td>
+          <td>Finestre abbaglianti che affaticano gli occhi a tarda notte</td>
+          <td class="highlight-col"><strong>Oscuramento programmato con una tonalità calda e riposante</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Presentazioni</strong></td>
+          <td>Dover chiudere ogni altra finestra prima di condividere</td>
+          <td class="highlight-col"><strong>Un clic oscura tutto tranne la finestra mostrata</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permessi</strong></td>
+          <td>Altri strumenti richiedono la registrazione dello schermo</td>
+          <td class="highlight-col"><strong>Umbrette non richiede nulla: né accessibilità né registrazione schermo</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>La privacy in un paragrafo</h2>
   <p>Umbrette non chiede alcun permesso, né Accessibilità né Registrazione schermo. Legge solo la posizione e le dimensioni delle finestre sullo schermo, che macOS fornisce a ogni app, e mai i loro titoli o il loro contenuto. Non ha accesso alla rete, né account, né tracciamento. L’<a href="privacy.html">informativa sulla privacy</a> completa dice lo stesso in modo più esteso.</p>

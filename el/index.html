@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="el" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Διαδραστική επίδειξη: κάντε κλικ σε ένα παράθυρο για εστίαση">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Δοκιμάστε το: κάντε κλικ σε οποιοδήποτε παράθυρο</span>
+      <label class="um-slider"><span>Ένταση σκίασης</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Επεξεργαστής</strong>
+        <p>Το παράθυρο στο οποίο εργάζεστε παραμένει ευκρινές και φωτεινό.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Συνομιλίες</strong>
+        <p>Οι συνομιλίες παρασκηνίου εξασθενούν απαλά χωρίς να αποσπούν την προσοχή.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Πρόγραμμα περιήγησης</strong>
+        <p>Το υλικό αναφοράς υποχωρεί μέχρι να κάνετε κλικ επάνω του.</p>
+      </div>
+  </div>
+  <p class="demo-note">Μια προσομοίωση της ιδέας. Στην εφαρμογή, η σκίαση καλύπτει την οθόνη σας και το φως ακολουθεί τις κινήσεις σας.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Απαιτεί macOS 14 Sonoma ή νεότερο.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Χειροκίνητη τακτοποίηση οθόνης έναντι του Umbrette</h2>
+  <p class="section-lead">Κρατήστε όλα τα παράθυρα ανοιχτά χωρίς να διακόπτεται η σκέψη σας.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Χαρακτηριστικό</th>
+          <th>Χειροκίνητα</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Εστίαση</strong></td>
+          <td>Ελαχιστοποίηση και απόκρυψη παραθύρων ένα προς ένα</td>
+          <td class="highlight-col"><strong>Το ενεργό παράθυρο μένει φωτεινό, τα υπόλοιπα υποχωρούν</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Εναλλαγή</strong></td>
+          <td>Αναδιάταξη κάθε φορά που αλλάζετε εργασία</td>
+          <td class="highlight-col"><strong>Το φως σας ακολουθεί αυτόματα καθώς αλλάζετε παράθυρα</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Βραδινές ώρες</strong></td>
+          <td>Έντονο εκτυφλωτικό φως αργά τη νύχτα</td>
+          <td class="highlight-col"><strong>Προγραμματισμένη σκίαση με θερμή και ξεκούραστη απόχρωση</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Παρουσιάσεις</strong></td>
+          <td>Κλείσιμο όλων των υπολοίπων πριν από κοινή χρήση</td>
+          <td class="highlight-col"><strong>Ένα κλικ σκιάζει τα πάντα εκτός από το παράθυρο παρουσίασης</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Άδειες</strong></td>
+          <td>Άλλα εργαλεία απαιτούν εγγραφή οθόνης</td>
+          <td class="highlight-col"><strong>Το Umbrette δεν ζητά καμία άδεια ούτε προσβασιμότητα</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Το απόρρητο σε μία παράγραφο</h2>
   <p>Το Umbrette δεν ζητά καμία άδεια, ούτε Προσβασιμότητα ούτε Εγγραφή οθόνης. Διαβάζει μόνο τη θέση και το μέγεθος των παραθύρων στην οθόνη, που το macOS δίνει σε κάθε εφαρμογή, και ποτέ τους τίτλους ή το περιεχόμενό τους. Δεν έχει πρόσβαση στο δίκτυο, λογαριασμό ή παρακολούθηση. Η πλήρης <a href="privacy.html">πολιτική απορρήτου</a> λέει τα ίδια πιο αναλυτικά.</p>

@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="ro" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Demonstrație interactivă: faceți clic pe o fereastră pentru a o evidenția">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Încercați: faceți clic pe orice fereastră</span>
+      <label class="um-slider"><span>Intensitate umbră</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Editorul tău</strong>
+        <p>Fereastra în care lucrezi rămâne clară și luminoasă în timp ce tastezi.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Mesaje</strong>
+        <p>Conversațiile din fundal sunt estompate delicat pentru a nu distrage atenția.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Browser</strong>
+        <p>Materialele de referință se retrag în fundal până când faci clic pe ele.</p>
+      </div>
+  </div>
+  <p class="demo-note">O simulare vizuală. În aplicație, umbra acoperă ecranul real, iar lumina te urmărește.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Necesită macOS 14 Sonoma sau o versiune ulterioară.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Aranjarea manuală a ferestrelor în comparație cu Umbrette</h2>
+  <p class="section-lead">Păstrează toate ferestrele deschise fără să pierzi șirul gândurilor.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Manual</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Concentrare</strong></td>
+          <td>Minimizarea și ascunderea ferestrelor una câte una</td>
+          <td class="highlight-col"><strong>Fereastra activă rămâne luminoasă; restul ecranului se retrage</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Schimbare activitate</strong></td>
+          <td>Rearanjare completă de fiecare dată când schimbi sarcina</td>
+          <td class="highlight-col"><strong>Lumina te urmează fluid pe măsură ce schimbi aplicațiile</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Seara</strong></td>
+          <td>Ferestre albe orbitoare târziu în noapte care obosesc ochii</td>
+          <td class="highlight-col"><strong>Estompare programată cu o nuanță caldă și odihnitoare</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Prezentări</strong></td>
+          <td>Închiderea ferestrelor private înainte de partajarea ecranului</td>
+          <td class="highlight-col"><strong>Un singur clic întunecă totul cu excepția ferestrei prezentate</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permisiuni</strong></td>
+          <td>Alte instrumente solicită înregistrarea ecranului</td>
+          <td class="highlight-col"><strong>Umbrette nu solicită nimic: nici înregistrare ecran, nici accesibilitate</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Confidențialitatea într-un paragraf</h2>
   <p>Umbrette nu cere nicio permisiune, nici Accesibilitate, nici Înregistrare ecran. Citește doar poziția și dimensiunea ferestrelor de pe ecran, pe care macOS le oferă oricărei aplicații, și niciodată titlurile sau conținutul lor. Nu are acces la rețea, cont sau urmărire. <a href="privacy.html">Politica de confidențialitate</a> completă spune același lucru mai pe larg.</p>

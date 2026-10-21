@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="id" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Demo interaktif: klik jendela mana saja untuk memfokuskannya">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Coba sekarang: klik jendela untuk menyorotnya</span>
+      <label class="um-slider"><span>Tingkat redup</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Editor Anda</strong>
+        <p>Jendela kerja Anda tetap tajam dan terang saat Anda mengetik.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Obrolan</strong>
+        <p>Pesan di latar belakang diredupkan lembut agar tidak mengganggu fokus.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Peramban</strong>
+        <p>Materi rujukan mundur perlahan sampai Anda mengekliknya kembali.</p>
+      </div>
+  </div>
+  <p class="demo-note">Simulasi visual. Pada aplikasi nyata, bayangan menutupi layar dan cahaya mengikuti perpindahan jendela Anda.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Memerlukan macOS 14 Sonoma atau lebih baru.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Merapikan layar secara manual dibandingkan Umbrette</h2>
+  <p class="section-lead">Biarkan semua jendela tetap terbuka tanpa kehilangan alur berpikir.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspek</th>
+          <th>Manual</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fokus</strong></td>
+          <td>Meminimalkan dan menyembunyikan jendela satu per satu</td>
+          <td class="highlight-col"><strong>Jendela aktif tetap terang; sisanya mundur ke latar belakang</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Beralih tugas</strong></td>
+          <td>Menata ulang jendela setiap kali berganti tugas</td>
+          <td class="highlight-col"><strong>Cahaya mengikuti Anda secara otomatis saat berpindah aplikasi</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Malam hari</strong></td>
+          <td>Layar terang menyilaukan mata saat bekerja larut</td>
+          <td class="highlight-col"><strong>Peredupan terjadwal dengan nuansa warna hangat yang nyaman</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Presentasi</strong></td>
+          <td>Menutup semua jendela privat sebelum berbagi layar</td>
+          <td class="highlight-col"><strong>Satu klik meredupkan semuanya kecuali jendela yang ditampilkan</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Izin</strong></td>
+          <td>Aplikasi lain membutuhkan izin Perekaman Layar</td>
+          <td class="highlight-col"><strong>Umbrette tidak meminta izin apa pun: tanpa Aksesibilitas atau Perekaman Layar</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privasi dalam satu paragraf</h2>
   <p>Umbrette tidak meminta izin apa pun, baik Aksesibilitas maupun Perekaman Layar. Umbrette hanya membaca posisi dan ukuran jendela di layar, yang diberikan macOS kepada setiap app, dan tidak pernah membaca judul atau isinya. Tidak ada akses jaringan, akun, atau pelacakan. <a href="privacy.html">Kebijakan privasi</a> lengkap menyatakan hal yang sama dengan lebih rinci.</p>

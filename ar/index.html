@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="ar" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="عرض توضيحي تفاعلي: انقر فوق أي نافذة للتركيز عليها">
+    <div class="um-controls">
+      <span class="um-hint">🖥 جرب الآن: انقر فوق أي نافذة لإبرازها</span>
+      <label class="um-slider"><span>عمق التعتيم</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>محرر الكود</strong>
+        <p>النافذة التي تعمل بها تظل واضحة ومشرقة أثناء الكتابة.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>المحادثة</strong>
+        <p>محادثات الخلفية معتمة بنعومة حتى لا تشتت انتباهك.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>المتصفح</strong>
+        <p>المراجع تتراجع للخلف برفق حتى تنقر عليها.</p>
+      </div>
+  </div>
+  <p class="demo-note">محاكاة بصرية للفكرة. في التطبيق الحقيقي، يغطي الظل شاشتك الفعلية ويتبعك الضوء أثناء التنقل.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">يتطلب macOS 14 Sonoma أو أحدث.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>ترتيب شاشتك يدوياً مقارنةً بـ Umbrette</h2>
+  <p class="section-lead">احتفظ بجميع نوافذك مفتوحة دون أن تفقد تركيزك.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>الجانب</th>
+          <th>يدوياً</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>التركيز</strong></td>
+          <td>تصغير وإخفاء النوافذ واحدة تلو الأخرى</td>
+          <td class="highlight-col"><strong>النافذة النشطة تظل ساطعة، وتتراجع بقية النوافذ للوراء</strong></td>
+        </tr>
+        <tr>
+          <td><strong>التبديل</strong></td>
+          <td>إعادة الترتيب في كل مرة تغير فيها مهمتك</td>
+          <td class="highlight-col"><strong>يتبعك الضوء تلقائياً أثناء التنقل بين النوافذ</strong></td>
+        </tr>
+        <tr>
+          <td><strong>المساء</strong></td>
+          <td>شاشات ساطعة تؤذي عينيك في وقت متأخر</td>
+          <td class="highlight-col"><strong>تعتيم مجدول بظلال دافئة مريحة للعينين</strong></td>
+        </tr>
+        <tr>
+          <td><strong>العروض والشاشات</strong></td>
+          <td>إغلاق كل البرامج الخاصة قبل مشاركة الشاشة</td>
+          <td class="highlight-col"><strong>نقرة واحدة تعتم كل شيء ما عدا النافذة المعروضة</strong></td>
+        </tr>
+        <tr>
+          <td><strong>الأذونات</strong></td>
+          <td>الأدوات الأخرى تتطلب إذن تسجيل الشاشة الحساس</td>
+          <td class="highlight-col"><strong>Umbrette لا يطلب أي إذن: لا تسجيل شاشة ولا تسهيلات استخدام</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>الخصوصية في فقرة واحدة</h2>
   <p>لا يطلب Umbrette أي إذن على الإطلاق، لا إمكانية الوصول ولا تسجيل الشاشة. لا يقرأ إلا موضع النوافذ على الشاشة وحجمها، وهو ما يتيحه macOS لكل تطبيق، ولا يقرأ أبدًا عناوينها أو ما بداخلها. ليس لديه وصول إلى الشبكة ولا حساب ولا تتبع. وتقول <a href="privacy.html">سياسة الخصوصية</a> الكاملة الشيء نفسه بتفصيل أكبر.</p>

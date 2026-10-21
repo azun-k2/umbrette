@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="nl" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Interactieve demo: klik op een venster om erop scherp te stellen">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Probeer het: klik op een venster om het te accentueren</span>
+      <label class="um-slider"><span>Dempingsgraad</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Uw editor</strong>
+        <p>Het venster waarin u werkt blijft haarscherp en helder tijdens het typen.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Chat</strong>
+        <p>Gesprekken op de achtergrond worden zacht gedimd zodat ze niet afleiden.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Browser</strong>
+        <p>Referentiedocumenten treden naar de achtergrond totdat u erop klikt.</p>
+      </div>
+  </div>
+  <p class="demo-note">Een visuele simulatie. In de app bedekt de schaduw uw scherm en volgt het licht uw vensterwissels.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Vereist macOS 14 Sonoma of nieuwer.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Handmatig uw scherm opruimen vergeleken met Umbrette</h2>
+  <p class="section-lead">Houd al uw vensters open zonder uw gedachtegang kwijt te raken.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Handmatig</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Focus</strong></td>
+          <td>Vensters een voor een minimaliseren en verbergen</td>
+          <td class="highlight-col"><strong>Het actieve venster blijft helder; de rest stapt zachtjes terug</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Wisselen</strong></td>
+          <td>Alles opnieuw ordenen bij elke nieuwe taak</td>
+          <td class="highlight-col"><strong>Het licht volgt u soepel wanneer u tussen apps wisselt</strong></td>
+        </tr>
+        <tr>
+          <td><strong>'s Avonds</strong></td>
+          <td>Felle witte vensters die 's avonds laat in uw ogen prikken</td>
+          <td class="highlight-col"><strong>Gepland dimmen met een zachte, warme kleurtint</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Presentaties</strong></td>
+          <td>Vooraf alle andere privévensters moeten sluiten</td>
+          <td class="highlight-col"><strong>Eén klik dimt alles behalve het venster dat u presenteert</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Machtigingen</strong></td>
+          <td>Andere tools vereisen schermopnamemachtigingen</td>
+          <td class="highlight-col"><strong>Umbrette vraagt niets: geen schermopname, geen toegankelijkheid</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privacy in één alinea</h2>
   <p>Umbrette vraagt helemaal geen toestemming, geen Toegankelijkheid en geen Schermopname. Het leest alleen de positie en grootte van de vensters op het scherm, die macOS aan elke app geeft, en nooit hun titels of wat erin staat. Het heeft geen netwerktoegang, geen account en geen tracking. Het volledige <a href="privacy.html">privacybeleid</a> zegt hetzelfde, maar uitgebreider.</p>

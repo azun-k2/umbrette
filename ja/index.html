@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="ja" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="インタラクティブデモ：ウィンドウをクリックしてフォーカス">
+    <div class="um-controls">
+      <span class="um-hint">🖥 お試しください：ウィンドウをクリックしてハイライト</span>
+      <label class="um-slider"><span>減光の深さ</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>エディタ</strong>
+        <p>作業中のウィンドウは入力中も鮮明で明るいまま保たれます。</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>チャット</strong>
+        <p>背景の会話は控えめに暗くなり、視線を奪われません。</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>ブラウザ</strong>
+        <p>参照資料はクリックするまで静かに背景へ下がります。</p>
+      </div>
+  </div>
+  <p class="demo-note">アイデアを視覚化したシミュレーションです。実際のアプリでは本物の画面全体をシェードが覆い、光がウィンドウ移動に追従します。</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">macOS 14 Sonoma以降が必要です。</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>手動での画面整理とUmbretteの比較</h2>
+  <p class="section-lead">思考を途切れさせることなく、すべてのウィンドウを開いたまま作業できます。</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>手動の場合</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>集中力</strong></td>
+          <td>ウィンドウを1つずつ最小化して隠す手間</td>
+          <td class="highlight-col"><strong>作業中のウィンドウだけが明るく残り、他は自然に奥へ下がります</strong></td>
+        </tr>
+        <tr>
+          <td><strong>切り替え</strong></td>
+          <td>タスクを変えるたびにウィンドウを再配置</td>
+          <td class="highlight-col"><strong>アプリやウィンドウを切り替えると光がスムーズに追従します</strong></td>
+        </tr>
+        <tr>
+          <td><strong>夜間</strong></td>
+          <td>深夜に眩しい白画面が目に刺さる</td>
+          <td class="highlight-col"><strong>スケジュールに合わせた自動減光と温かみのあるカラーシェード</strong></td>
+        </tr>
+        <tr>
+          <td><strong>画面共有・デモ</strong></td>
+          <td>共有前に他のプライベートウィンドウをすべて閉じる必要</td>
+          <td class="highlight-col"><strong>ワンクリックで見せたいウィンドウ以外をすべて減光</strong></td>
+        </tr>
+        <tr>
+          <td><strong>システム権限</strong></td>
+          <td>他社ツールは画面収録権限を要求</td>
+          <td class="highlight-col"><strong>Umbretteは一切の権限を求めません（アクセシビリティも画面収録も不要）</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>プライバシーをひとことで</h2>
   <p>Umbretteはアクセシビリティも画面収録も含め、権限を一切求めません。読み取るのは画面上のウインドウの位置とサイズだけで、これはmacOSがすべてのアプリに提供している情報です。ウインドウのタイトルや中身を読むことはありません。ネットワークへのアクセスも、アカウントも、トラッキングもありません。詳しくは<a href="privacy.html">プライバシーポリシー</a>の全文をご覧ください。</p>

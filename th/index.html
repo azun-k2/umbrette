@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="th" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="เดโมแบบอินเทอร์แอคทีฟ: คลิกหน้าต่างเพื่อโฟกัส">
+    <div class="um-controls">
+      <span class="um-hint">🖥 ลองคลิกหน้าต่างใดก็ได้เพื่อไฮไลต์</span>
+      <label class="um-slider"><span>ระดับความมืด</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>เอดิเตอร์</strong>
+        <p>หน้าต่างที่คุณกำลังทำงานยังคงสว่างคมชัดขณะที่คุณพิมพ์</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>แชท</strong>
+        <p>ข้อความพื้นหลังจะถูกลดแสงลงอย่างนุ่มนวลเพื่อไม่ให้รบกวนสายตา</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>เบราว์เซอร์</strong>
+        <p>เอกสารอ้างอิงจะถอยไปอยู่เบื้องหลังจนกว่าคุณจะคลิก</p>
+      </div>
+  </div>
+  <p class="demo-note">การจำลองแนวคิด ในแอปจริงเฉดเงาจะปกคลุมหน้าจอจริงของคุณและแสงสว่างจะติดตามคุณไป</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">ต้องใช้ macOS 14 Sonoma ขึ้นไป</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>การจัดหน้าจอด้วยตนเอง เทียบกับ Umbrette</h2>
+  <p class="section-lead">เปิดทุกหน้าต่างค้างไว้โดยไม่สูญเสียสมาธิและความคิด</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>ด้าน</th>
+          <th>ทำด้วยตนเอง</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>สมาธิ</strong></td>
+          <td>ย่อและซ่อนหน้าต่างทีละหน้าต่างอย่างเหนื่อยล้า</td>
+          <td class="highlight-col"><strong>หน้าต่างที่ใช้งานยังคงสว่างสดใส ส่วนที่เหลือจะถอยฉากลง</strong></td>
+        </tr>
+        <tr>
+          <td><strong>การสลับงาน</strong></td>
+          <td>ต้องจัดหน้าจอใหม่ทุกครั้งที่เปลี่ยนบริบทงาน</td>
+          <td class="highlight-col"><strong>แสงสว่างจะติดตามคุณอย่างราบรื่นเมื่อสลับหน้าต่าง</strong></td>
+        </tr>
+        <tr>
+          <td><strong>ช่วงค่ำ</strong></td>
+          <td>หน้าต่างสีขาวจ้าแสบตากลางดึก</td>
+          <td class="highlight-col"><strong>หรี่แสงตามกำหนดเวลาด้วยเฉดสีโทนอุ่นสบายตา</strong></td>
+        </tr>
+        <tr>
+          <td><strong>การนำเสนอ</strong></td>
+          <td>ต้องปิดโปรแกรมส่วนตัวทั้งหมดก่อนแชร์หน้าจอ</td>
+          <td class="highlight-col"><strong>คลิกเดียวหรี่ทุกอย่างยกเว้นหน้าต่างที่คุณกำลังนำเสนอ</strong></td>
+        </tr>
+        <tr>
+          <td><strong>การอนุญาต</strong></td>
+          <td>เครื่องมืออื่นต้องขอสิทธิ์บันทึกหน้าจอ</td>
+          <td class="highlight-col"><strong>Umbrette ไม่ขอสิทธิ์ใดๆ: ไม่มีการบันทึกหน้าจอหรือการเข้าถึง</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>ความเป็นส่วนตัวในย่อหน้าเดียว</h2>
   <p>Umbrette ไม่ขอสิทธิ์ใดๆ เลย ทั้งการช่วยการเข้าถึงและการบันทึกหน้าจอ แอปอ่านเพียงตำแหน่งและขนาดของหน้าต่างบนหน้าจอ ซึ่ง macOS ให้ทุกแอปอยู่แล้ว และไม่เคยอ่านชื่อหรือเนื้อหาในหน้าต่าง ไม่มีการเข้าถึงเครือข่าย ไม่มีบัญชี และไม่มีการติดตาม <a href="privacy.html">นโยบายความเป็นส่วนตัว</a>ฉบับเต็มก็กล่าวไว้เช่นเดียวกันแต่ละเอียดกว่า</p>

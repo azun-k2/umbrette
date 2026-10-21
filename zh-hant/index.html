@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="zh-hant" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="互動示範：點擊視窗以聚焦">
+    <div class="um-controls">
+      <span class="um-hint">🖥 試試看：點擊任何視窗使其高亮</span>
+      <label class="um-slider"><span>變暗深度</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>編輯器</strong>
+        <p>您正在輸入的活動視窗始終保持清晰透亮。</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>通訊軟體</strong>
+        <p>背景對話柔和變暗，不再分散您的視線。</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>瀏覽器</strong>
+        <p>參考資料靜靜退入背景，直至您再次點擊。</p>
+      </div>
+  </div>
+  <p class="demo-note">直觀的概念模擬。在實際應用中，柔和陰影覆蓋您的真實螢幕，光芒隨您切換視窗而流轉。</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">需要 macOS 14 Sonoma 或以上版本。</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>手動整理桌面與 Umbrette 的對比</h2>
+  <p class="section-lead">讓所有視窗保持開啟，而思緒從不被打斷。</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>對比項目</th>
+          <th>手動整理</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>專注力</strong></td>
+          <td>逐個最小化和隱藏視窗</td>
+          <td class="highlight-col"><strong>當前工作的視窗保持明亮；其餘視窗自然退居幕後</strong></td>
+        </tr>
+        <tr>
+          <td><strong>切換任務</strong></td>
+          <td>每次切換工作時都必須重新排列視窗</td>
+          <td class="highlight-col"><strong>光芒自動跟隨您在應用和視窗間穿梭</strong></td>
+        </tr>
+        <tr>
+          <td><strong>夜間護眼</strong></td>
+          <td>深夜刺眼的白色視窗損傷視力</td>
+          <td class="highlight-col"><strong>按計劃定時變暗，帶有溫暖柔和的暖光色調</strong></td>
+        </tr>
+        <tr>
+          <td><strong>簡報分享</strong></td>
+          <td>螢幕共享前不得不關閉所有私密視窗</td>
+          <td class="highlight-col"><strong>一鍵暗化除展示視窗之外的所有背景</strong></td>
+        </tr>
+        <tr>
+          <td><strong>系統權限</strong></td>
+          <td>其他工具需要敏感的螢幕錄製權限</td>
+          <td class="highlight-col"><strong>Umbrette 無需任何權限：既無需輔助功能，也無需螢幕錄製</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>一段話說清楚隱私權</h2>
   <p>Umbrette 不要求任何權限，既不需要輔助使用，也不需要螢幕錄製。它只讀取螢幕上視窗的位置和大小，這是 macOS 提供給每個 App 的資訊，絕不讀取視窗的標題或內容。它沒有網路存取、沒有帳號，也沒有追蹤。完整的<a href="privacy.html">隱私權政策</a>有更詳細的說明。</p>

@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="hi" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="इंटरैक्टिव डेमो: फ़ोकस करने के लिए किसी भी विंडो पर क्लिक करें">
+    <div class="um-controls">
+      <span class="um-hint">🖥 आज़माएँ: हाइलाइट करने के लिए किसी भी विंडो पर क्लिक करें</span>
+      <label class="um-slider"><span>डिम तीव्रता</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>एडिटर</strong>
+        <p>काम करते समय आपकी सक्रिय विंडो बिल्कुल साफ़ और चमकदार रहती है।</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>चैट</strong>
+        <p>बैकग्राउंड संदेश हल्के डिम हो जाते हैं ताकि ध्यान न भटके।</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>ब्राउज़र</strong>
+        <p>संदर्भ सामग्री तब तक पीछे रहती है जब तक आप उस पर क्लिक न करें।</p>
+      </div>
+  </div>
+  <p class="demo-note">यह केवल एक सिमुलेशन है। ऐप में शेड आपकी असली स्क्रीन को कवर करता है और लाइट आपके साथ चलती है।</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">macOS 14 Sonoma या बाद का वर्शन ज़रूरी है।</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>हाथ से स्क्रीन व्यवस्थित करना बनाम Umbrette</h2>
+  <p class="section-lead">अपनी सोच की निरंतरता खोए बिना हर विंडो को खुला रखें।</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>पहलू</th>
+          <th>हाथ से</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>एकाग्रता</strong></td>
+          <td>एक-एक करके विंडो को छोटा और छिपाना</td>
+          <td class="highlight-col"><strong>सक्रिय विंडो चमकदार रहती है; बाकी पीछे हट जाती हैं</strong></td>
+        </tr>
+        <tr>
+          <td><strong>स्विचिंग</strong></td>
+          <td>हर बार काम बदलते समय दोबारा व्यवस्थित करना</td>
+          <td class="highlight-col"><strong>ऐप्स बदलते ही रोशनी सहजता से आपका अनुसरण करती है</strong></td>
+        </tr>
+        <tr>
+          <td><strong>शाम के समय</strong></td>
+          <td>देर रात स्क्रीन की तेज़ रोशनी आँखों को चुभती है</td>
+          <td class="highlight-col"><strong>हल्के गर्म शेड के साथ तय समय पर स्वचालित डिमिंग</strong></td>
+        </tr>
+        <tr>
+          <td><strong>प्रस्तुति</strong></td>
+          <td>स्क्रीन शेयर करने से पहले बाकी सब कुछ बंद करना</td>
+          <td class="highlight-col"><strong>एक क्लिक में प्रस्तुत विंडो को छोड़कर सब डिम हो जाता है</strong></td>
+        </tr>
+        <tr>
+          <td><strong>अनुमतियाँ</strong></td>
+          <td>अन्य टूल्स स्क्रीन रिकॉर्डिंग की अनुमति माँगते हैं</td>
+          <td class="highlight-col"><strong>Umbrette कोई अनुमति नहीं माँगता: न स्क्रीन रिकॉर्डिंग, न एक्सेसिबिलिटी</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>एक पैराग्राफ़ में गोपनीयता</h2>
   <p>Umbrette कोई अनुमति नहीं माँगता, न ऐक्सेसिबिलिटी, न स्क्रीन रिकॉर्डिंग। यह स्क्रीन पर विंडो की केवल जगह और आकार पढ़ता है, जो macOS हर ऐप को देता है, और उनके शीर्षक या उनके अंदर की सामग्री कभी नहीं पढ़ता। इसके पास कोई नेटवर्क एक्सेस, अकाउंट या ट्रैकिंग नहीं है। पूरी <a href="privacy.html">गोपनीयता नीति</a> यही बात विस्तार से कहती है।</p>

@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="ms" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Demo interaktif: klik mana-mana tetingkap untuk memfokuskannya">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Cuba sekarang: klik tetingkap untuk menyerlahkannya</span>
+      <label class="um-slider"><span>Kedalaman malap</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Editor Anda</strong>
+        <p>Tetingkap kerja anda kekal tajam dan terang semasa anda menaip.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Mesej</strong>
+        <p>Perbualan latar dimalapkan lembut agar tidak mengganggu pandangan.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Pelayar</strong>
+        <p>Bahan rujukan berundur ke belakang sehingga anda menekannya.</p>
+      </div>
+  </div>
+  <p class="demo-note">Simulasi visual. Dalam aplikasi sebenar, bayang menutupi skrin dan cahaya mengikut pergerakan anda.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Memerlukan macOS 14 Sonoma atau lebih baharu.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Mengemas skrin secara manual berbanding Umbrette</h2>
+  <p class="section-lead">Kekalkan semua tetingkap terbuka tanpa kehilangan tumpuan minda.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspek</th>
+          <th>Secara manual</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fokus</strong></td>
+          <td>Meminimumkan dan menyembunyikan tetingkap satu demi satu</td>
+          <td class="highlight-col"><strong>Tetingkap aktif kekal cerah; yang lain berundur ke belakang</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Bertukar kerja</strong></td>
+          <td>Menyusun semula setiap kali bertukar tugas</td>
+          <td class="highlight-col"><strong>Cahaya mengikut anda secara automatik apabila menukar tetingkap</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Waktu malam</strong></td>
+          <td>Tetingkap cerah yang menyilaukan mata pada lewat malam</td>
+          <td class="highlight-col"><strong>Pemalapan berjadual dengan ton warna hangat yang menenangkan</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Perkongsian skrin</strong></td>
+          <td>Menutup semua tetingkap peribadi sebelum berkongsi skrin</td>
+          <td class="highlight-col"><strong>Satu klik memalapkan semua tetingkap kecuali yang dipaparkan</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Kebenaran</strong></td>
+          <td>Alat lain memerlukan kebenaran Rakaman Skrin</td>
+          <td class="highlight-col"><strong>Umbrette tidak meminta apa-apa: tiada Aksesibiliti atau Rakaman Skrin</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privasi dalam satu perenggan</h2>
   <p>Umbrette tidak meminta sebarang kebenaran, sama ada Kebolehcapaian atau Rakaman Skrin. Ia hanya membaca kedudukan dan saiz tetingkap pada skrin, yang diberikan oleh macOS kepada setiap app, dan tidak pernah membaca tajuk atau kandungannya. Ia tiada akses rangkaian, tiada akaun dan tiada penjejakan. <a href="privacy.html">Dasar privasi</a> penuh menyatakan perkara yang sama dengan lebih terperinci.</p>

@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="ru" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Интерактивное демо: нажмите на окно для фокусировки">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Попробуйте: нажмите на любое окно для подсветки</span>
+      <label class="um-slider"><span>Степень затемнения</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Ваш редактор</strong>
+        <p>Рабочее окно остается четким и ярким во время ввода текста.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Чат</strong>
+        <p>Фоновые беседы мягко затемняются, не отвлекая взгляд.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Браузер</strong>
+        <p>Справочные вкладки плавно отступают на задний план до клика.</p>
+      </div>
+  </div>
+  <p class="demo-note">Наглядная симуляция. В приложении мягкая тень покрывает реальный экран, следуя за фокусом.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Требуется macOS 14 Sonoma или новее.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Ручная уборка окон на экране в сравнении с Umbrette</h2>
+  <p class="section-lead">Держите все окна открытыми, не теряя нить собственных мыслей.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Параметр</th>
+          <th>Вручную</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Концентрация</strong></td>
+          <td>Сворачивание и скрытие окон по одному вручную</td>
+          <td class="highlight-col"><strong>Активное окно остается ярким, а остальные мягко отступают</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Переключение</strong></td>
+          <td>Постоянная перестановка окон при каждой смене задачи</td>
+          <td class="highlight-col"><strong>Свет автоматически следует за вами при переходе между окнами</strong></td>
+        </tr>
+        <tr>
+          <td><strong>По вечерам</strong></td>
+          <td>Яркие белые окна слепят глаза глубокой ночью</td>
+          <td class="highlight-col"><strong>Затемнение по расписанию с мягким теплым оттенком</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Демонстрации</strong></td>
+          <td>Необходимость закрывать личные окна перед показом экрана</td>
+          <td class="highlight-col"><strong>Один клик затемняет все окна, кроме демонстрируемого</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Разрешения</strong></td>
+          <td>Другие утилиты требуют опасный доступ к записи экрана</td>
+          <td class="highlight-col"><strong>Umbrette не просит ничего: ни записи экрана, ни универсального доступа</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Конфиденциальность в одном абзаце</h2>
   <p>Umbrette не запрашивает никаких разрешений — ни Универсального доступа, ни Записи экрана. Он читает только положение и размер окон на экране, которые macOS сообщает любому приложению, и никогда их заголовки или содержимое. У него нет доступа к сети, учётной записи и отслеживания. Полная <a href="privacy.html">политика конфиденциальности</a> говорит то же самое подробнее.</p>

@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="nb" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Interaktiv demo: klikk på et vindu for å fokusere det">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Prøv det: klikk på et vilkårlig vindu for å fremheve det</span>
+      <label class="um-slider"><span>Dempingsgrad</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Tekstredigering</strong>
+        <p>Vinduet du jobber i forblir skarpt og lyst mens du taster.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Meldinger</strong>
+        <p>Bakgrunnssamtaler dempes mykt så de ikke stjeler oppmerksomheten.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Nettleser</strong>
+        <p>Referansemateriale trer i bakgrunnen til du klikker på det.</p>
+      </div>
+  </div>
+  <p class="demo-note">En visuell simulering. I selve appen dekker dempingen skjermen, og lyset følger deg.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Krever macOS 14 Sonoma eller nyere.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Manuell vindusrydding sammenlignet med Umbrette</h2>
+  <p class="section-lead">Hold alle vinduer åpne uten å miste tankerekken din.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspekt</th>
+          <th>Manuelt</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fokus</strong></td>
+          <td>Minimere og skjule vinduer ett etter ett</td>
+          <td class="highlight-col"><strong>Det aktive vinduet forblir lyst; resten trer i bakgrunnen</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Oppgavebytte</strong></td>
+          <td>Ommøblere skjermen hver gang du bytter oppgave</td>
+          <td class="highlight-col"><strong>Lyset følger deg automatisk når du bytter vindu</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Kveldstid</strong></td>
+          <td>Blendende hvite vinduer sent på kvelden</td>
+          <td class="highlight-col"><strong>Planlagt demping med en behagelig varm fargetone</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Presentasjoner</strong></td>
+          <td>Lukke alt annet før du deler skjermen</td>
+          <td class="highlight-col"><strong>Ett klikk demper alt unntatt vinduet du viser frem</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tillatelser</strong></td>
+          <td>Andre verktøy krever skjermopptakstillatelse</td>
+          <td class="highlight-col"><strong>Umbrette ber om ingenting: verken skjermopptak eller tilgjengelighet</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Personvern i ett avsnitt</h2>
   <p>Umbrette ber ikke om noen tillatelse i det hele tatt, verken Tilgjengelighet eller Skjermopptak. Den leser bare posisjonen og størrelsen på vinduene på skjermen, som macOS gir alle apper, og aldri titlene eller innholdet deres. Den har ingen nettverkstilgang, ingen konto og ingen sporing. Den fullstendige <a href="privacy.html">personvernerklæringen</a> sier det samme mer utførlig.</p>

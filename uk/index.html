@@ -48,6 +48,7 @@
 <link rel="alternate" hreflang="x-default" href="https://umbrette.khangazun.com/">
 <script src="../family/family.js" defer data-lang="uk" data-page="index.html" data-langs="en,ar,ca,cs,da,de,el,es,fi,fr,he,hi,hr,hu,id,it,ja,ko,ms,nb,nl,pl,pt-br,pt-pt,ro,ru,sk,sv,th,tr,uk,vi,zh-hans,zh-hant"></script>
 <!-- /family:head -->
+<link rel="stylesheet" href="../demo.css">
 </head>
 <body>
 <main>
@@ -106,6 +107,43 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="um-desktop" role="group" aria-label="Інтерактивне демо: натисніть на вікно для фокусування">
+    <div class="um-controls">
+      <span class="um-hint">🖥 Спробуйте: натисніть на будь-яке вікно для підсвічування</span>
+      <label class="um-slider"><span>Ступінь затемнення</span><input type="range" id="um-depth" min="20" max="90" value="65"><output id="um-val">65%</output></label>
+    </div>
+      <div class="um-win um-w1 active" data-win="1" role="button" tabindex="0" aria-pressed="true">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Ваш редактор</strong>
+        <p>Робоче вікно залишається чітким та яскравим під час введення тексту.</p>
+      </div>
+      <div class="um-win um-w2" data-win="2" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Чати</strong>
+        <p>Фонові повідомлення м'яко затемнюються, щоб не відволікати погляд.</p>
+      </div>
+      <div class="um-win um-w3" data-win="3" role="button" tabindex="0" aria-pressed="false">
+        <span class="um-dots"><i></i><i></i><i></i></span>
+        <strong>Браузер</strong>
+        <p>Довідкові матеріали плавно відступають на задній план до кліку.</p>
+      </div>
+  </div>
+  <p class="demo-note">Наочна симуляція. У додатку м'яка тінь покриває справжній екран, слідуючи за робочим вікном.</p>
+</div>
+<script>
+(function () {
+  var desk = document.querySelector('.um-desktop'); if (!desk) return;
+  var wins = desk.querySelectorAll('.um-win'), slider = document.getElementById('um-depth'), out = document.getElementById('um-val');
+  function dim() { var v = +slider.value; out.textContent = v + '%'; desk.style.setProperty('--dim', v / 100); }
+  function focusWin(w) { wins.forEach(function (x) { var on = x === w; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on); }); }
+  wins.forEach(function (w) {
+    w.addEventListener('click', function () { focusWin(w); });
+    w.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusWin(w); } });
+  });
+  slider.addEventListener('input', dim); dim();
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -122,6 +160,48 @@
   <p class="note">Потрібна macOS 14 Sonoma або новіша.</p>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Ручне впорядкування вікон порівняно з Umbrette</h2>
+  <p class="section-lead">Тримайте всі вікна відкритими, не втрачаючи нитку думок.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Аспект</th>
+          <th>Вручну</th>
+          <th class="highlight-col">Umbrette</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Концентрація</strong></td>
+          <td>Згортання та приховування вікон по одному вручну</td>
+          <td class="highlight-col"><strong>Активне вікно залишається яскравим; решта м'яко відступає</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Перемикання</strong></td>
+          <td>Постійне перевпорядкування при кожній зміні завдання</td>
+          <td class="highlight-col"><strong>Світло плавно слідує за вами під час зміни програм</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Вечорами</strong></td>
+          <td>Сліпучі білі вікна пізно вночі, що втомлюють зір</td>
+          <td class="highlight-col"><strong>Затемнення за розкладом із приємним теплим відтінком</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Презентації</strong></td>
+          <td>Необхідність закривати особисті вікна перед показом</td>
+          <td class="highlight-col"><strong>Один клік затемнює все, крім вікна, яке ви демонструєте</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Дозволи</strong></td>
+          <td>Інші утиліти вимагають доступ до запису екрана</td>
+          <td class="highlight-col"><strong>Umbrette не просить нічого: ні запису екрана, ні доступності</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Конфіденційність в одному абзаці</h2>
   <p>Umbrette не просить жодних дозволів — ні Доступності, ні Запису екрана. Він читає лише положення й розмір вікон на екрані, які macOS надає будь-якій програмі, і ніколи їхні заголовки чи вміст. Він не має доступу до мережі, облікового запису й стеження. Повна <a href="privacy.html">політика конфіденційності</a> каже те саме докладніше.</p>
